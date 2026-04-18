@@ -1,12 +1,16 @@
-# Technical Documentation – Portfolio Website (Assignment 2)
+# Technical Documentation – Portfolio Website (Assignment 3)
 
 ## Overview
 This project is a responsive, single-page portfolio website built with **HTML**, **CSS**, and **JavaScript**.  
 It is designed to display well on **desktop, tablet, and mobile** and includes:
 - Anchor-based navigation with smooth scrolling
+- A collapsible mobile navigation menu
 - A dark/light theme toggle (persistent via localStorage)
-- A time-based greeting message in the hero section
+- A popup state manager for visitor name and hidden-section preferences
+- A time-based greeting message in the hero section, including the saved visitor name
+- A GitHub API section that fetches recent public repositories
 - Expand/collapse project cards with only one open at a time
+- Project filtering, sorting, and visitor-level recommendations
 - A public API section that fetches and displays a fun fact
 - User feedback states for API loading, failure, and empty results
 - A contact form with front-end validation
@@ -18,7 +22,7 @@ It is designed to display well on **desktop, tablet, and mobile** and includes:
 
 ## Project Structure
 ```text
-assignment-1/
+202361930-belalshebl-assignment3/
 ├── index.html
 ├── css/
 │   └── style.css
@@ -26,19 +30,20 @@ assignment-1/
 │   └── script.js
 ├── assets/
 │   └── images/
-│       ├── headshot.png
+│       ├── headshot-optimized.jpg
 │       ├── project1.jpg
 │       └── project2.png
-└── docs/
-├── ai-usage-report.md
-└── technical-documentation.md
+├── docs/
+│   ├── ai-usage-report.md
+│   └── technical-documentation.md
+└── README.md
 ```
 
 # Technologies Used
 HTML5: Semantic structure, sections, form elements, and expandable project cards
 CSS3: Responsive design using Grid/Flexbox, CSS variables, media queries, hover effects, transitions, and animations
-JavaScript (Vanilla): Smooth scrolling, theme toggling, dynamic greeting logic, project expand/collapse control, API fetching, and form validation
-Public API: Used to fetch and display a random fun fact
+JavaScript (Vanilla): Smooth scrolling, theme toggling, persisted UI state, dynamic greeting logic, project logic, API fetching, and form validation
+Public APIs: Used to fetch and display GitHub repositories and a random fun fact
 No frameworks: The project intentionally uses lightweight, plain web technologies
 
 # HTML Architecture (index.html)
@@ -46,32 +51,37 @@ No frameworks: The project intentionally uses lightweight, plain web technologie
 
 The <nav> contains anchor links pointing to section IDs:
 
-#about, #projects, #achievements, #hobbies, #contact-me, #fun-fact
+#about, #projects, #github, #achievements, #hobbies, #contact-me, #fun-fact
 
-A theme toggle button is included in the navigation:
+The navigation also includes:
 
-Button ID: theme-toggle
-Class: nav-btn
-Used by JavaScript to switch light/dark themes.
+- a mobile `Menu` button that expands the navigation links on smaller screens
+- a `State Manager` button that opens the saved-preferences popup
+- a `Dark mode` button that switches the theme and saves the preference
 
 ## Hero Header
 
-The hero section contains a dynamic greeting and highlighted name:
+The hero section contains:
 
 Greeting target: <span id="greeting"></span>
+Saved visitor-name target: <span id="visitor-greeting-name"></span>
 The name uses <span class="accent">Belal Shebl</span> for accent color styling.
 A subtitle sits below the main heading inside .subtitle.
+A live timer and a personalized helper message appear below the subtitle.
 
 ## Main Sections
 
 The <main> element includes the following sections:
 
 About (#about): Two-column layout (text + photo frame + tagline)
-Projects (#projects): Expandable project cards inside .project-grid
+Projects (#projects): Expandable project cards inside .project-grid with filtering and sorting
+GitHub (#github): A public API section that shows recent repositories
 Achievements (#achievements): Headings with bullet lists
-Hobbies (#hobbies): Bullet list
+Hobbies (#hobbies): Bullet list that can be shown/hidden through saved state
 Fun Fact (#fun-fact): A public API section with dynamic content and a refresh button
 Contact (#contact-me): A structured form using .contact-form and .form-row
+
+State management is controlled through a popup panel outside the main content rather than a standalone section.
 
 ## Projects Section
 
@@ -130,7 +140,8 @@ This supports consistency and makes theme changes easier.
 The project uses Flexbox and CSS Grid for responsiveness:
 
 - Navigation (nav)
-  - Uses flex layout with flex-wrap so links wrap on smaller screens.
+  - Uses a one-line desktop layout.
+  - Switches to a collapsible menu on smaller screens.
   - position: sticky keeps nav visible while scrolling.
 - Hero (header.hero)
   - Centered, responsive typography using clamp() for scalable headings.
@@ -386,4 +397,3 @@ http://localhost:8000
 Connect the contact form to a real backend or form service
 Add active-section highlighting in the nav while scrolling
 Add live validation while the user types
-Replace the fun-fact API with a more portfolio-specific API such as books, research, or technology content

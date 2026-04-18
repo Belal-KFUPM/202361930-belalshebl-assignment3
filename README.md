@@ -1,65 +1,40 @@
-# Assignment 2 – Portfolio Website
+# Assignment 3 – Portfolio Website
 
 ## Project Description
-This project is a responsive **single-page portfolio website** built with **HTML, CSS, and JavaScript**.  
-It includes the required sections:
+This project is a responsive single-page portfolio website built with HTML, CSS, and JavaScript. It presents my background, projects, achievements, hobbies, and contact form in one page, while also adding interactive features such as:
 
-- **About Me** (short intro + profile image + tagline)
-- **Projects** (at least 2 projects with descriptions and images/placeholders)
-- **Achievements**
-- **Hobbies**
-- **Contact** (form with Name, Email, Message — no backend)
+- a dark/light theme toggle
+- a collapsible mobile navigation menu
+- a state manager popup that saves the visitor name and hidden-section preferences with `localStorage`
+- project filtering, sorting, and experience-based recommendations
+- a live timer showing time spent on the site
+- GitHub API integration for recent repositories
+- a public fun-fact API section
+- client-side form validation and feedback messages
 
-The layout is designed to display well on **desktop, tablet, and mobile** using **CSS Grid/Flexbox**. The site also includes small interactive enhancements such as **smooth scrolling**, a **dark/light theme toggle**, and a **time-based greeting**.
+## Setup Instructions
 
----
-### Additional features added
-The website was further enhanced with:
-- **Expandable/collapsible project cards** so each project can be opened and closed individually
-- **Only one project open at a time** behavior for a cleaner layout
-- A **Fun Fact** section that fetches and displays data from a **public API**
-- **Loading, failure, and empty-state feedback** for the API section
-- **Client-side contact form validation** for empty or invalid inputs
-- **Animated success and error messages** for form feedback
-- **Hover and transition effects** on buttons, cards, and navigation links for a more polished UI
-
----
-
-## Setup Instructions (Run Locally)
-
-### Option 1: Open directly in a browser
+### Option 1: Open directly
 1. Download or clone this repository.
-2. Open `index.html` in your browser.
+2. Open [index.html](/Users/mac/Desktop/SWE363/Assignments/202361930-belalshebl-assignment3/index.html) in a browser.
 
-### Option 2: Run using a local server (recommended)
-**VS Code (Live Server):**
-1. Open the project folder in VS Code.
-2. Install the **Live Server** extension (if needed).
-3. Right-click `index.html` → **Open with Live Server**.
+### Option 2: Run locally with a server
+1. Open a terminal in the project folder.
+2. Run:
 
-**Python HTTP Server:**
 ```bash
-cd assignment-1
+cd 202361930-belalshebl-assignment3
 python3 -m http.server 8000
 ```
-Then open:
-http://localhost:8000
 
-## Performance
-This site is lightweight (plain HTML/CSS/JS) and optimized for fast loading:
-- Images use native lazy loading (`loading="lazy"`) to reduce initial page load work.
-- No heavy frameworks or large libraries are used, keeping file sizes and runtime overhead low.
+3. Visit `http://localhost:8000`.
 
+### VS Code Live Server
+1. Open the project folder in VS Code.
+2. Install the Live Server extension if needed.
+3. Right-click `index.html` and choose `Open with Live Server`.
 
 ## AI Use Summary
-AI was used as a support tool during development (planning, responsive layout guidance, and implementing specific JavaScript features).
-It also helped with:
+AI was used as a support tool for planning, UI refinement, JavaScript feature implementation, debugging, and documentation updates. It helped speed up layout decisions, API integration, validation logic, and interactive behaviors, but the final code and content were reviewed and adjusted manually.
 
-improving UI interactivity and transitions,
-implementing animated form feedback,
-adding API-based dynamic content and its user feedback states,
-and debugging API integration issues.
-
-
-
-A full and detailed report (tools used, benefits/challenges, learning outcomes, and how AI suggestions were reviewed and modified) is available here: docs/ai-usage-report.md
+The full AI usage report is available in [docs/ai-usage-report.md](docs/ai-usage-report.md).

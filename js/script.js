@@ -1,6 +1,25 @@
 // js/script.js
 
 document.addEventListener("DOMContentLoaded", () => {
+  const navMenuToggle = document.getElementById("nav-menu-toggle");
+  const navLinksContainer = document.getElementById("nav-links");
+
+  function setMobileNavState(isOpen) {
+    if (!navMenuToggle || !navLinksContainer) return;
+
+    navMenuToggle.setAttribute("aria-expanded", String(isOpen));
+    navLinksContainer.classList.toggle("is-open", isOpen);
+  }
+
+  function syncNavForViewport() {
+    if (!navLinksContainer || !navMenuToggle) return;
+
+    if (window.innerWidth > 900) {
+      navLinksContainer.classList.remove("is-open");
+      navMenuToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+
   // ---------------------------
   // Smooth scrolling (JS fallback + offset support)
   // ---------------------------
@@ -25,8 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
       // Improve accessibility: move focus to the section
       target.setAttribute("tabindex", "-1");
       target.focus({ preventScroll: true });
+
+      if (window.innerWidth <= 900) {
+        setMobileNavState(false);
+      }
     });
   });
+
+  navMenuToggle?.addEventListener("click", () => {
+    const isExpanded = navMenuToggle.getAttribute("aria-expanded") === "true";
+    setMobileNavState(!isExpanded);
+  });
+
+  window.addEventListener("resize", syncNavForViewport);
+  syncNavForViewport();
 
   // ---------------------------
   // Dark/Light theme toggle (saved in localStorage)
@@ -63,36 +94,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // Greeting message by time of day
   // ---------------------------
   const greetingEl = document.getElementById("greeting");
-  if (greetingEl) {
+  const visitorGreetingNameEl = document.getElementById("visitor-greeting-name");
+
+  function getGreetingText() {
     const hour = new Date().getHours();
-    let greeting = "Hi";
 
-    if (hour >= 5 && hour < 12) greeting = "Good Morning";
-    else if (hour >= 12 && hour < 18) greeting = "Good Afternoon";
-    else greeting = "Good Evening";
-
-    greetingEl.textContent = `${greeting},`;
+    if (hour >= 5 && hour < 12) return "Good Morning";
+    if (hour >= 12 && hour < 18) return "Good Afternoon";
+    return "Good Evening";
   }
 
   // ---------------------------
   // Stored application state
   // ---------------------------
   const appStateKey = "portfolio-app-state";
+  const stateToggleBtn = document.getElementById("state-toggle");
+  const stateMenu = document.getElementById("state-menu");
+  const closeStateMenuBtn = document.getElementById("close-state-menu");
   const visitorForm = document.getElementById("visitor-form");
   const visitorNameInput = document.getElementById("visitor-name");
   const clearVisitorNameBtn = document.getElementById("clear-visitor-name");
-  const visitorMessage = document.getElementById("visitor-message");
-  const loginToggleBtn = document.getElementById("login-toggle");
-  const loginStatusText = document.getElementById("login-status-text");
-  const loginStatusMessage = document.getElementById("login-status-message");
-  const hobbiesSection = document.getElementById("hobbies");
-  const toggleHobbiesBtn = document.getElementById("toggle-hobbies");
-  const sectionVisibilityText = document.getElementById("section-visibility-text");
+  const customMessage = document.getElementById("custom-message");
+  const sectionCheckboxes = Array.from(
+    document.querySelectorAll("[data-section-toggle]")
+  );
 
   const defaultAppState = {
     visitorName: "",
-    isCollaboratorMode: false,
-    showHobbies: true,
+    hiddenSections: [],
   };
 
   function loadAppState() {
@@ -113,52 +142,53 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(appStateKey, JSON.stringify(appState));
   }
 
+  function isSectionHidden(sectionId) {
+    return appState.hiddenSections.includes(sectionId);
+  }
+
+  function toggleStateMenu(forceOpen) {
+    if (!stateMenu || !stateToggleBtn) return;
+
+    const shouldOpen =
+      typeof forceOpen === "boolean" ? forceOpen : stateMenu.hidden;
+
+    stateMenu.hidden = !shouldOpen;
+    stateToggleBtn.setAttribute("aria-expanded", String(shouldOpen));
+  }
+
   function renderAppState() {
     if (visitorNameInput) {
       visitorNameInput.value = appState.visitorName;
     }
 
-    if (visitorMessage) {
-      visitorMessage.textContent = appState.visitorName
-        ? `Welcome back, ${appState.visitorName}. Your name is saved on this device.`
-        : "Welcome! Save your name to personalize this portfolio.";
+    if (greetingEl) {
+      greetingEl.textContent = getGreetingText();
     }
 
-    if (loginStatusText) {
-      loginStatusText.textContent = appState.isCollaboratorMode
-        ? "Current status: Collaborator Mode"
-        : "Current status: Visitor Mode";
+    if (visitorGreetingNameEl) {
+      visitorGreetingNameEl.textContent = appState.visitorName
+        ? `${appState.visitorName}, `
+        : "";
     }
 
-    if (loginStatusMessage) {
-      loginStatusMessage.textContent = appState.isCollaboratorMode
-        ? "Collaborator mode reveals a more involved visitor journey and keeps your preferences active."
-        : "Visitor mode shows the public portfolio experience.";
+    if (customMessage) {
+      customMessage.textContent = appState.visitorName
+        ? "Your saved preferences are active. Explore the sections that match your interests."
+        : "Welcome! Explore the sections that match your interests.";
     }
 
-    if (loginToggleBtn) {
-      loginToggleBtn.textContent = appState.isCollaboratorMode
-        ? "Switch to Visitor Mode"
-        : "Switch to Collaborator Mode";
-      loginToggleBtn.setAttribute("aria-pressed", String(appState.isCollaboratorMode));
-    }
+    sectionCheckboxes.forEach((checkbox) => {
+      const sectionId = checkbox.dataset.sectionToggle;
+      const targetSection = sectionId ? document.getElementById(sectionId) : null;
+      const shouldHide = Boolean(sectionId && isSectionHidden(sectionId));
 
-    if (hobbiesSection) {
-      hobbiesSection.hidden = !appState.showHobbies;
-    }
+      checkbox.checked = shouldHide;
 
-    if (sectionVisibilityText) {
-      sectionVisibilityText.textContent = appState.showHobbies
-        ? "My hobbies section is currently visible."
-        : "My hobbies section is currently hidden.";
-    }
-
-    if (toggleHobbiesBtn) {
-      toggleHobbiesBtn.textContent = appState.showHobbies
-        ? "Hide Hobbies Section"
-        : "Show Hobbies Section";
-      toggleHobbiesBtn.setAttribute("aria-pressed", String(!appState.showHobbies));
-    }
+      if (targetSection) {
+        targetSection.hidden = shouldHide;
+        targetSection.classList.toggle("section-hidden", shouldHide);
+      }
+    });
   }
 
   visitorForm?.addEventListener("submit", (event) => {
@@ -171,20 +201,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   clearVisitorNameBtn?.addEventListener("click", () => {
     appState.visitorName = "";
+    appState.hiddenSections = [];
     saveAppState();
     renderAppState();
   });
 
-  loginToggleBtn?.addEventListener("click", () => {
-    appState.isCollaboratorMode = !appState.isCollaboratorMode;
-    saveAppState();
-    renderAppState();
+  stateToggleBtn?.addEventListener("click", () => {
+    toggleStateMenu();
   });
 
-  toggleHobbiesBtn?.addEventListener("click", () => {
-    appState.showHobbies = !appState.showHobbies;
-    saveAppState();
-    renderAppState();
+  closeStateMenuBtn?.addEventListener("click", () => {
+    toggleStateMenu(false);
+  });
+
+  sectionCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const sectionId = checkbox.dataset.sectionToggle;
+      if (!sectionId) return;
+
+      appState.hiddenSections = checkbox.checked
+        ? [...new Set([...appState.hiddenSections, sectionId])]
+        : appState.hiddenSections.filter((id) => id !== sectionId);
+
+      saveAppState();
+      renderAppState();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!stateMenu || stateMenu.hidden) return;
+
+    const clickedInsideMenu = stateMenu.contains(event.target);
+    const clickedToggle = stateToggleBtn?.contains(event.target);
+
+    if (!clickedInsideMenu && !clickedToggle) {
+      toggleStateMenu(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      toggleStateMenu(false);
+    }
   });
 
   renderAppState();

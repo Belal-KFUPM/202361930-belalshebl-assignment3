@@ -9,25 +9,68 @@
 
     <body>
         <nav>
-            <a href="#about">About Me</a>
-            <a href="#state">State</a>
-            <a href="#github">GitHub</a>
-            <a href="#projects">Projects</a>
-            <a href="#achievements">Achievements</a>
-            <a href="#hobbies">Hobbies</a>
-            <a href="#contact-me">Contact Me</a>
-            <a href="#fun-fact">Fun Fact</a>
-
-            <button id="theme-toggle" class="nav-btn" type="button" aria-pressed="false">
-                Dark mode
+            <button id="nav-menu-toggle" class="nav-btn nav-menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+                Menu
             </button>
+
+            <div id="nav-links" class="nav-links">
+                <a href="#about">About Me</a>
+                <a href="#projects">Projects</a>
+                <a href="#github">GitHub</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#hobbies">Hobbies</a>
+                <a href="#contact-me">Contact Me</a>
+                <a href="#fun-fact">Fun Fact</a>
+
+                <button id="state-toggle" class="nav-btn" type="button" aria-expanded="false" aria-controls="state-menu">
+                    State Manager
+                </button>
+                <button id="theme-toggle" class="nav-btn" type="button" aria-pressed="false">
+                    Dark mode
+                </button>
+            </div>
         </nav>
+
+        <div id="state-menu" class="state-menu" hidden>
+            <div class="state-menu-card">
+                <div class="state-menu-header">
+                    <h2>State Manager</h2>
+                    <button id="close-state-menu" class="close-btn" type="button" aria-label="Close state manager">x</button>
+                </div>
+
+                <form id="visitor-form" class="visitor-form">
+                    <label for="visitor-name">Your Name</label>
+                    <input type="text" id="visitor-name" name="visitor-name" placeholder="Enter your name">
+                    <div class="state-actions">
+                        <button type="submit" class="btn state-btn">Save Name</button>
+                        <button type="button" id="clear-visitor-name" class="btn state-btn secondary-btn">Clear</button>
+                    </div>
+                </form>
+
+                <div class="hidden-sections-panel">
+                    <h3>Hide Sections</h3>
+                    <p class="helper-text">Check any section you want hidden from the page.</p>
+
+                    <div class="section-checkboxes">
+                        <label><input type="checkbox" data-section-toggle="about"> About Me</label>
+                        <label><input type="checkbox" data-section-toggle="projects"> Projects</label>
+                        <label><input type="checkbox" data-section-toggle="github"> GitHub Activity</label>
+                        <label><input type="checkbox" data-section-toggle="achievements"> Achievements</label>
+                        <label><input type="checkbox" data-section-toggle="hobbies"> Hobbies</label>
+                        <label><input type="checkbox" data-section-toggle="fun-fact"> Fun Fact</label>
+                        <label><input type="checkbox" data-section-toggle="contact-me"> Contact Me</label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <header class="hero" id="top">
             <div class="hero-text">
-                <h1><span id="greeting"></span> I'm <br><span class="accent">Belal Shebl</span></h1>
+                <h1><span id="greeting"></span> <span id="visitor-greeting-name"></span>I'm <br><span class="accent">Belal Shebl</span></h1>
                 <p class="subtitle">A Computer Science Student</p>
+                <p class="hero-timer">You have been exploring this portfolio for <span id="time-on-site">0 seconds</span>.</p>
+                <p id="custom-message" class="hero-message">Welcome! Explore the sections that match your interests.</p>
             </div>
         </header>
 
@@ -51,53 +94,6 @@
                 </div>
             </section>
 
-            <section id="state">
-                <h2>State Manager</h2>
-
-                <div class="state-grid">
-                    <div class="logic-panel state-card">
-                        <h3>Visitor Profile</h3>
-                        <p id="visitor-message">Welcome! Save your name to personalize this portfolio.</p>
-
-                        <form id="visitor-form" class="visitor-form">
-                            <label for="visitor-name">Your Name</label>
-                            <input type="text" id="visitor-name" name="visitor-name" placeholder="Enter your name">
-                            <div class="state-actions">
-                                <button type="submit" class="btn state-btn">Save Name</button>
-                                <button type="button" id="clear-visitor-name" class="btn state-btn secondary-btn">Clear</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="logic-panel state-card">
-                        <h3>Portfolio Access Mode</h3>
-                        <p id="login-status-text">Current status: Visitor Mode</p>
-                        <p id="login-status-message" class="helper-text">
-                            Visitor mode shows the public portfolio experience.
-                        </p>
-                        <button type="button" id="login-toggle" class="btn state-btn">Switch to Collaborator Mode</button>
-                    </div>
-
-                    <div class="logic-panel state-card">
-                        <h3>Section Visibility</h3>
-                        <p id="section-visibility-text">My hobbies section is currently visible.</p>
-                        <button type="button" id="toggle-hobbies" class="btn state-btn">Hide Hobbies Section</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="github">
-                <h2>GitHub Activity</h2>
-
-                <div class="api-card github-card">
-                    <p id="github-status">Loading GitHub repositories...</p>
-                    <div id="github-repos" class="github-repo-list" aria-live="polite"></div>
-                    <p class="helper-text github-note">
-                        Live data fetched from the GitHub API to keep this portfolio connected to my current public work.
-                    </p>
-                </div>
-            </section>
-            
            <section id="projects">
                 <h2>Projects</h2>
 
@@ -184,6 +180,18 @@
                 </div>
             </section>
 
+            <section id="github">
+                <h2>GitHub Activity</h2>
+
+                <div class="api-card github-card">
+                    <p id="github-status">Loading GitHub repositories...</p>
+                    <div id="github-repos" class="github-repo-list" aria-live="polite"></div>
+                    <p class="helper-text github-note">
+                        Live data fetched from the GitHub API to keep this portfolio connected to my current public work.
+                    </p>
+                </div>
+            </section>
+
             <section id="achievements">
                 <h2>Achievements</h2>
                 
@@ -223,12 +231,6 @@
 
             <section id="fun-fact">
                 <h2>Daily Fun Fact</h2>
-                <div class="logic-panel timer-panel">
-                    <div>
-                        <h3>Site Timer</h3>
-                        <p>You have been exploring this portfolio for <span id="time-on-site">0 seconds</span>.</p>
-                    </div>
-                </div>
                 <div class="api-card">
                     <p id="fact-text">Loading a fun fact...</p>
                     <button id="new-fact-btn" class="btn" type="button">Get another fact</button>

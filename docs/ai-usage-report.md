@@ -1,4 +1,6 @@
-# AI Usage Report (Assignment 2)
+# AI Usage Report (Assignment 3)
+
+This document explains how I used AI across the three submissions for this portfolio project, with emphasis on the work completed for Assignment 3.
 
 ## Tools Used & Use Cases
 
@@ -22,7 +24,13 @@ I used ChatGPT as a support tool to speed up development and reduce trial-and-er
   - loading and failure messages for the public API fun-fact section,
   - an empty-state message when no API data is returned.
 - **Help debug API integration issues** by assisting with troubleshooting the API setup and integration process, including debugging API key-related issues during implementation.
-- **Documentation support:** Used ChatGPT to draft and refine project documentation (README and technical documentation), ensuring the docs clearly describe the project structure, features, and how to run the site locally while keeping the final wording aligned with my implementation.
+- **Implement Assignment 3 logic features** by helping design and refine:
+  - the complex project display logic for filtering, sorting, and audience-based recommendations,
+  - the state management system for saved visitor name and hidden-section preferences,
+  - the mobile navigation and responsive interaction behavior.
+- **Implement GitHub connectivity** by helping connect the portfolio to GitHub data using the API key / authenticated integration workflow and shaping the logic used to fetch and display repository information.
+- **Code review and cleanup support:** Used AI to check for stale references, inconsistent documentation, unnecessary clutter, and weak spots in the implementation, then clean up the project files.
+- **Testing and debugging support:** Used AI to help test behavior, reason through bugs, validate JavaScript syntax, and troubleshoot issues such as state persistence, hiding/showing sections, and navigation behavior.
 
 ## Benefits & Challenges
 
@@ -35,11 +43,14 @@ I used ChatGPT as a support tool to speed up development and reduce trial-and-er
   - how to structure project cards for reliable grid layouts.
 - **Improved interface polish:** AI helped me add small front-end details that improve user experience, such as animated feedback messages and button/card hover transitions.
 - **Help with integration troubleshooting:** AI also helped diagnose issues during API integration, including problems related to API key setup and usage.
+- **Support for more advanced logic:** AI was especially helpful when combining multiple conditions and user states, such as project filters, sorting rules, saved preferences, and personalized messages.
+- **Help with code quality:** AI made it easier to spot stale documentation, leftover clutter, and implementation inconsistencies across the project.
 
 ### Challenges / Limitations
 - **Design tuning still required manual work:** Even with AI-generated CSS, I needed to adjust spacing, alignment, and visual hierarchy to match the intended design.
 - **Static site constraints:** AI clarified that storing form submissions to CSV/text is not possible directly from browser-only HTML/JS due to security limitations; it requires a backend or third-party form handling.
 - **Avoiding over-reliance:** AI can generate a lot of code; I had to choose only the parts that fit my design and course requirements.
+- **Debugging still required judgment:** Even when AI suggested likely fixes, I still had to test them and make sure they actually matched the behavior I wanted in the browser.
 
 ## Learning Outcomes
 
@@ -51,19 +62,16 @@ I used ChatGPT as a support tool to speed up development and reduce trial-and-er
 - Learned how to implement **useful front-end JavaScript** patterns:
   - smooth scrolling with sticky-nav offset handling,
   - theme toggling using a `data-theme` attribute and `localStorage`,
-  - dynamic greeting messages using the current time.
+  - dynamic greeting messages using the current time,
+  - state management for saved names and hidden sections,
+  - conditional rendering based on user selections.
 - Learned how to improve **user interaction and feedback** through:
   - animated success and error messages,
   - hover and transition effects on links, buttons, and cards,
   - loading, failure, and empty-state messages for API-based content.
 - Learned more about **API integration debugging**, including how to identify and troubleshoot issues related to API configuration and key usage.
+- Learned more about **testing and cleanup workflow**, including checking for stale references, validating logic after changes, and making documentation consistent with the final codebase.
 
-### Workflow Improvements
-- Improved my development process by:
-  - building structure first (HTML),
-  - styling for layout and responsiveness next (CSS),
-  - adding only necessary interactivity (JS),
-  - documenting AI usage and changes at the end.
 
 ## Responsible Use & Modifications
 
@@ -71,15 +79,9 @@ I used AI as an assistant, not a replacement for my own work. To ensure correctn
 
 - **Reviewed all AI output** before adding it to my project.
 - **Modified AI-generated CSS and JS** to match my specific design goals and assignment requirements.  
-  For example, I used AI help mainly for the harder parts such as:
-  - structuring the responsive project card grid,
-  - implementing theme toggling with persistence and accessible button behavior,
-  - implementing smooth scrolling with an offset to account for the sticky navigation bar,
-  - adding animated success/failure feedback for the contact form,
-  - adding transition and hover effects to interactive elements,
-  - debugging API integration issues, including API key setup problems.
-- **Tested changes manually** by resizing the browser and using DevTools to confirm the layout works on desktop, tablet, and mobile.
+- **Tested changes manually** by resizing the browser, using DevTools, and checking interactive features to confirm the layout and logic work on desktop, tablet, and mobile.
+- **Used AI suggestions critically** for debugging and cleanup, rather than accepting fixes automatically. I verified whether each suggested fix actually solved the issue I was seeing.
 - **Kept the content and layout decisions my own:** I chose the final site structure (single-page sections), the final copy/wording, and refined styling choices rather than accepting everything AI suggested.
 - **Ensured originality:** I treated AI code as a starting point, then rewrote/adjusted it to fit my project’s structure, naming conventions, and intended UI.
 
-Overall, AI improved my speed and helped with tricky implementation details, but I ensured the final result reflects my own understanding and work.
+Overall, AI improved my speed and helped with tricky implementation details across all three submissions, but I ensured the final result reflects my own understanding, testing, and work.
